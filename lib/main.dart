@@ -58,20 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(60, 60, 60, 1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            // FutureBuilder(
-            //     future: loadAsset(),
-            //     builder: (context, snapshot) {
-            //       return Html(data: snapshot.data ?? 'abc');
-            //     })
-            Html(data: images[ind])
-          ],
+          children: <Widget>[Image.asset("assets/test4.png")],
         ),
       ),
       floatingActionButton: FloatingActionButton(

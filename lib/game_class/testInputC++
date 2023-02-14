@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include "inputs.h"
+
+using namespace std;
+
+const vector<string> verbe = {"ouvrir", "fermer"};
+const vector<string> objets = {"porte", "placard"};
+
+void keyboardInput(MinGL &window, string &text)
+{
+    if (text.size() < 25)
+    {
+        for (size_t i(0); i < 26; ++i)
+        {
+            if (window.isPressed({char(97 + i), false}))
+            {
+                window.resetKey({char(97 + i), false});
+                text += char(97 + i);
+            }
+        }
+    }
+    if (window.isPressed({127, false}))
+        text = "";
+    if (window.isPressed({8, false}))
+    {
+        window.resetKey({8, false});
+        text = text.substr(0, text.size() - 1);
+    }
+    if (window.isPressed({13, false}))
+        text = "123";
+}
+
+// check si l'input est exploitable et contient bien au moins deux mots
+bool isInputValid(string text)
+{
+    if (text.size() == 0)
+        return false;
+    if (text.find(' ', 0) == (size_t)(-1) || text.find(' ', 0) == 0)
+        return false;
+    if (text.find(' ', 0) == text.size() - 1)
+        return false;
+    return true;
+}
+
+bool isWordsValid(string verb, string objet)
+{
+    vector<string> objets = {"cle", "porte", "porte en fer"}; // faire une fct pour avoir la liste des noms des object a disposition
+    vector<string> verbs = {"ouvrir", "fermer"};
+    if (find(objets.begin(), objets.end(), objet) != objets.end())
+    {
+        if (find(verbs.begin(), verbs.end(), verb) != verbs.end())
+            return true;
+        // regarder dans la liste des actions disponible de l'objet si le verbe est présent
+        // regarder egalement si le verbe est present dans les actions du joueurs
+        cout << "verbe invalide";
+        return false;
+    }
+    cout << "objet invalide";
+    return false;
+}
+
+pair<string, string> parseInput(string text)
+{
+    pair<string, string> words = make_pair("", "");
+    if (isInputValid(text) == false)
+        return words;
+    string verbe = text.substr(0, text.find(' '));
+    string objet = text.substr(text.find(' ') + 1, text.size());
+    if (isWordsValid(verbe, objet) == false)
+        return words;
+    return make_pair(verbe, objet);
+}

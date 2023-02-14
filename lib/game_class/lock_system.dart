@@ -1,4 +1,7 @@
+import 'package:escape_game/game_class/input.dart';
+
 import 'global_object.dart';
+import 'item.dart';
 
 class LockSystem extends GlobalObject {
   bool isLocked = true;
@@ -10,6 +13,14 @@ class LockSystem extends GlobalObject {
     return isLocked;
   }
 
+  String getLockedLocks() {
+    List<Lock> lockedLock = [];
+    for (Lock lock in locks) {
+      if (lock.isLocked) lockedLock.add(lock);
+    }
+    return parseListOfElement(lockedLock);
+  }
+
   bool checkIfStillLocked() {
     for (Lock lock in locks) {
       if (lock.isLocked == true) {
@@ -19,28 +30,28 @@ class LockSystem extends GlobalObject {
     return false;
   }
 
-  String tryToUnlock(var combi) {
-    if (combi is int) {
-      // substitut pour clé
-      for (Lock lock in locks) {
-        if (lock.tryToUnlockLock(combi)) return "Vous avez déverouillez " + lock.name;
-      }
-      return "Aucune serrure ne correspond à cette clée.";
-    }
-    // Regarder le pov du joueur
-    // if (locks[lockNumber] is Padlock) {
-    //   if (locks[0].tryToUnlockLock(combi)) {
-    //     return ("Vous avez déverouillez " + locks[lockNumber].name);
-    //   }
-    //   return "Mauvaise Combinaison.";
-    // } else if (locks[lockNumber] is KeyHole) {
-    //   if (locks[lockNumber].tryToUnlockLock(combi)) {
-    //     return "Vous avez déverouillez " + locks[lockNumber].name;
-    //   }
-    //   return "Mauvaise clée.";
-    // }
-    return "jsp";
-  }
+  // String tryToUnlock(var combi) {
+  //   if (combi is Key) {
+  //     // substitut pour clé
+  //     for (Lock lock in locks) {
+  //       if (lock.tryToUnlockLock(combi)) return "Vous avez déverouillez " + lock.name;
+  //     }
+  //     return "Aucune serrure ne correspond à cette clée.";
+  //   }
+  //   // Regarder le pov du joueur
+  //   // if (locks[lockNumber] is Padlock) {
+  //   //   if (locks[0].tryToUnlockLock(combi)) {
+  //   //     return ("Vous avez déverouillez " + locks[lockNumber].name);
+  //   //   }
+  //   //   return "Mauvaise Combinaison.";
+  //   // } else if (locks[lockNumber] is KeyHole) {
+  //   //   if (locks[lockNumber].tryToUnlockLock(combi)) {
+  //   //     return "Vous avez déverouillez " + locks[lockNumber].name;
+  //   //   }
+  //   //   return "Mauvaise clée.";
+  //   // }
+  //   return "jsp";
+  // }
 }
 
 // ----------- LOCK ---------- //
@@ -50,8 +61,8 @@ class Lock extends GlobalObject {
 
   Lock(int id, String name, String description) : super(id, name, description);
 
-  bool tryToUnlockLock(var combi) {
-    return true;
+  String tryToUnlockLock(var combi) {
+    return "";
   }
 }
 
@@ -63,28 +74,26 @@ class Padlock extends Lock {
   Padlock(int id, String name, String description, this.code) : super(id, name, description);
 
   @override
-  bool tryToUnlockLock(var combi) {
+  String tryToUnlockLock(var combi) {
     if (combi == code) {
       isLocked = false;
-      return true;
+      return "Vous avez déverouillé $name.";
     }
-    return false;
+    return "Rien ne se passe, vous avez surement essayer la mauvaise combinaison.";
   }
 }
 
 // ----------- KEYHOLE ---------- //
 
 class KeyHole extends Lock {
-  int key = 3;
-
-  KeyHole(int id, String name, String description, this.key) : super(id, name, description);
+  KeyHole(int id, String name, String description) : super(id, name, description);
 
   @override
-  bool tryToUnlockLock(var combi) {
-    if (key == combi) {
+  String tryToUnlockLock(var combi) {
+    if (combi is Key && combi.idKeyHole == id) {
       isLocked = false;
-      return true;
+      return "Vous avez déverouillé $name.";
     }
-    return false;
+    return "Vous essayer de déverouiller $name.La clé ne semble ne pas correspondre pas à cette porte";
   }
 }

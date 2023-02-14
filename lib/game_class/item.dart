@@ -3,10 +3,15 @@ import 'global_object.dart';
 // ---------- Item ---------- //
 
 class Item extends GlobalObject {
-  bool isTeakeable = true; // se dit suremement pas jpp
+  bool isTakeable;
 
-  Item(int id, String name, String description, this.isTeakeable) : super(id, name, description) {
-    if (isTeakeable) actions.add("prendre");
+  Item(int id, String name, String description, this.isTakeable)
+      : super(
+          id,
+          name,
+          description,
+        ) {
+    if (isTakeable) actions.add("prendre");
   }
 }
 
@@ -57,9 +62,20 @@ class Watch extends Item {
 
   @override
   String watch() {
-    if (endGame.year == 0)
-      return "Il est " + DateTime.now().hour.toString() + "h" + DateTime.now().minute.toString() + ".";
+    if (endGame.year == 0) {
+      String minute = DateTime.now().minute.toString();
+      if (minute.length == 1) minute = "0" + minute;
+      return "Il est " + DateTime.now().hour.toString() + "h$minute.";
+    }
     Duration lastingTime = endGame.difference(DateTime.now());
     return "Il vous reste " + lastingTime.inMinutes.toString() + " minutes.";
   }
+}
+
+// ---------- Key ----------- //
+
+class Key extends Item {
+  int idKeyHole;
+
+  Key(int id, String name, String description, this.idKeyHole) : super(id, name, description, true);
 }

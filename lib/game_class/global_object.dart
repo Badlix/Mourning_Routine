@@ -1,3 +1,7 @@
+import 'package:escape_game/game_class/door.dart';
+import 'package:escape_game/game_class/furnitures.dart';
+import 'item.dart';
+
 class GlobalObject {
   int id = 0;
   String name = "";
@@ -36,5 +40,33 @@ class GlobalObject {
 
   String read() {
     return "Je ne peux pas faire ça";
+  }
+
+  List<Item> getAllItems() {
+    return [];
+  }
+
+  List<Furniture> getAllFurnitures() {
+    return [];
+  }
+
+  List<Door> getAllDoors() {
+    return [];
+  }
+
+  List<Drawer> getAllDrawers() {
+    return [];
+  }
+
+  String checkLocks() {
+    return "";
+  }
+
+  Map<String, GlobalObject> getAccessibleObject() {
+    return {};
+  }
+
+  String tryToUnlockLock(var combi) {
+    return "Je ne peux pas faire ça.";
   }
 }
