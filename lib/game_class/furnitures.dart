@@ -11,17 +11,8 @@ class Furniture extends GlobalObject {
   bool isLocked = false;
   late LockSystem lockSystem;
 
-  Furniture(int id, String name, String description, this.drawers, this.items, this.isLocked, this.lockSystem)
-      : super(id, name, description);
-
-  // bool isDrawer() {
-  //   return (drawers.isEmpty);
-  // }
-
-  // String unlock(var combi) {
-  //   if (lockSystem.locks.isEmpty) return "Je ne peux pas faire ça";
-  //   return lockSystem.tryToUnlock(combi);
-  // }
+  Furniture(String name, String description, this.drawers, this.items, this.isLocked, this.lockSystem)
+      : super(name, description);
 
   @override
   List<Item> getAllItems() {
@@ -66,6 +57,11 @@ class Furniture extends GlobalObject {
     }
     return accessibleObject;
   }
+
+  @override
+  String watch() {
+    return description + " Il contient " + parseListOfElement(drawers);
+  }
 }
 
 class Drawer extends GlobalObject {
@@ -73,13 +69,7 @@ class Drawer extends GlobalObject {
   bool isLocked = false;
   late LockSystem lockSystem;
 
-  Drawer(int id, String name, String description, this.items, this.isLocked, this.lockSystem)
-      : super(id, name, description);
-
-  // String unlock(var combi) {
-  //   if (lockSystem.locks.isEmpty) return "Je n'ai pas besoins de faire ça";
-  //   return lockSystem.tryToUnlock(combi);
-  // }
+  Drawer(String name, String description, this.items, this.isLocked, this.lockSystem) : super(name, description);
 
   @override
   List<Item> getAllItems() {
@@ -100,6 +90,16 @@ class Drawer extends GlobalObject {
       str += parseListOfElement(items);
     }
     return "Vous ouvrez $name.\n" + str;
+  }
+
+  @override
+  void removeObject(GlobalObject object) {
+    for (Item item in items) {
+      if (item == object) {
+        items.remove(object);
+        return;
+      }
+    }
   }
 
   @override

@@ -5,9 +5,8 @@ import 'global_object.dart';
 class Item extends GlobalObject {
   bool isTakeable;
 
-  Item(int id, String name, String description, this.isTakeable)
+  Item(String name, String description, this.isTakeable)
       : super(
-          id,
           name,
           description,
         ) {
@@ -20,8 +19,7 @@ class Item extends GlobalObject {
 class Paper extends Item {
   String text = "";
 
-  Paper(int id, String name, String description, bool isTeakeable, this.text)
-      : super(id, name, description, isTeakeable) {
+  Paper(String name, String description, bool isTeakeable, this.text) : super(name, description, isTeakeable) {
     actions.add("lire");
   }
 
@@ -36,7 +34,7 @@ class Paper extends Item {
 class Lighter extends Item {
   List<String> whereToUse = ["Plaque de cuisson"];
 
-  Lighter(int id, String name, String description) : super(id, name, description, true) {
+  Lighter(String name, String description) : super(name, description, true) {
     actions.add("utiliser");
   }
 }
@@ -46,7 +44,7 @@ class Lighter extends Item {
 class Watch extends Item {
   DateTime endGame = DateTime(0);
 
-  Watch(int id, String name, String description) : super(id, name, description, true);
+  Watch(String name, String description) : super(name, description, true);
 
   void startWatch() {
     var today = DateTime.now();
@@ -77,5 +75,5 @@ class Watch extends Item {
 class Key extends Item {
   int idKeyHole;
 
-  Key(int id, String name, String description, this.idKeyHole) : super(id, name, description, true);
+  Key(String name, String description, this.idKeyHole) : super(name, description, true);
 }

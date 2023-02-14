@@ -3,16 +3,11 @@ import 'package:escape_game/game_class/furnitures.dart';
 import 'item.dart';
 
 class GlobalObject {
-  int id = 0;
   String name = "";
   String description = "";
   List<String> actions = ["regarder"];
 
-  GlobalObject(this.id, this.name, this.description);
-
-  int get getId {
-    return id;
-  }
+  GlobalObject(this.name, this.description);
 
   String get getName {
     return name;
@@ -35,11 +30,15 @@ class GlobalObject {
   }
 
   String open() {
-    return "Je ne peux pas faire ça";
+    return "Je ne peux pas faire ça.";
   }
 
   String read() {
-    return "Je ne peux pas faire ça";
+    return "Je ne peux pas faire ça.";
+  }
+
+  String use() {
+    return "Je ne peux pas faire ça.";
   }
 
   List<Item> getAllItems() {
@@ -69,4 +68,6 @@ class GlobalObject {
   String tryToUnlockLock(var combi) {
     return "Je ne peux pas faire ça.";
   }
+
+  void removeObject(GlobalObject object) {}
 }

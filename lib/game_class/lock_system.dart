@@ -7,7 +7,7 @@ class LockSystem extends GlobalObject {
   bool isLocked = true;
   List<Lock> locks = [];
 
-  LockSystem(int id, String name, String description, this.locks) : super(id, name, description);
+  LockSystem(String name, String description, this.locks) : super(name, description);
 
   bool get getIsLocked {
     return isLocked;
@@ -29,29 +29,6 @@ class LockSystem extends GlobalObject {
     }
     return false;
   }
-
-  // String tryToUnlock(var combi) {
-  //   if (combi is Key) {
-  //     // substitut pour clé
-  //     for (Lock lock in locks) {
-  //       if (lock.tryToUnlockLock(combi)) return "Vous avez déverouillez " + lock.name;
-  //     }
-  //     return "Aucune serrure ne correspond à cette clée.";
-  //   }
-  //   // Regarder le pov du joueur
-  //   // if (locks[lockNumber] is Padlock) {
-  //   //   if (locks[0].tryToUnlockLock(combi)) {
-  //   //     return ("Vous avez déverouillez " + locks[lockNumber].name);
-  //   //   }
-  //   //   return "Mauvaise Combinaison.";
-  //   // } else if (locks[lockNumber] is KeyHole) {
-  //   //   if (locks[lockNumber].tryToUnlockLock(combi)) {
-  //   //     return "Vous avez déverouillez " + locks[lockNumber].name;
-  //   //   }
-  //   //   return "Mauvaise clée.";
-  //   // }
-  //   return "jsp";
-  // }
 }
 
 // ----------- LOCK ---------- //
@@ -59,7 +36,7 @@ class LockSystem extends GlobalObject {
 class Lock extends GlobalObject {
   bool isLocked = true;
 
-  Lock(int id, String name, String description) : super(id, name, description);
+  Lock(String name, String description) : super(name, description);
 
   String tryToUnlockLock(var combi) {
     return "";
@@ -71,7 +48,7 @@ class Lock extends GlobalObject {
 class Padlock extends Lock {
   String code = "";
 
-  Padlock(int id, String name, String description, this.code) : super(id, name, description);
+  Padlock(String name, String description, this.code) : super(name, description);
 
   @override
   String tryToUnlockLock(var combi) {
@@ -86,11 +63,14 @@ class Padlock extends Lock {
 // ----------- KEYHOLE ---------- //
 
 class KeyHole extends Lock {
-  KeyHole(int id, String name, String description) : super(id, name, description);
+  int idKeyHole;
+
+  KeyHole(String name, String description, this.idKeyHole) : super(name, description);
 
   @override
   String tryToUnlockLock(var combi) {
-    if (combi is Key && combi.idKeyHole == id) {
+    print(combi);
+    if (combi is Key && combi.idKeyHole == idKeyHole) {
       isLocked = false;
       return "Vous avez déverouillé $name.";
     }

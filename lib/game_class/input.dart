@@ -27,3 +27,14 @@ String parseListOfElement(List<GlobalObject> words) {
   str += ".";
   return str;
 }
+
+String parseListOfElement2(List<String> words) {
+  String str = "";
+  for (var i = 0; i < words.length; i++) {
+    str += words[i];
+    if (i <= words.length - 3 && words.length >= 3) str += ", ";
+    if (i == words.length - 2) str += " et ";
+  }
+  str += ".";
+  return str;
+}

@@ -1,3 +1,5 @@
+import 'package:escape_game/game_class/input.dart';
+
 import 'furnitures.dart';
 import 'item.dart';
 import 'door.dart';
@@ -10,9 +12,8 @@ class Room extends GlobalObject {
   bool firstVisit = true;
   bool areLightsOn = true;
 
-  Room(int id, String name, String description, this.furnitures, this.items, this.doors, this.firstVisit,
-      this.areLightsOn)
-      : super(id, name, description);
+  Room(String name, String description, this.furnitures, this.items, this.doors, this.firstVisit, this.areLightsOn)
+      : super(name, description);
 
   @override
   List<Item> getAllItems() {
@@ -42,5 +43,20 @@ class Room extends GlobalObject {
       accessibleObject[door.name] = door;
     }
     return accessibleObject;
+  }
+
+  @override
+  String watch() {
+    List<GlobalObject> obj = [];
+    for (Furniture furniture in furnitures) {
+      obj.add(furniture);
+    }
+    for (Item item in items) {
+      obj.add(item);
+    }
+    for (Door door in doors) {
+      obj.add(door);
+    }
+    return description + "\nVous y voyez " + parseListOfElement(obj);
   }
 }

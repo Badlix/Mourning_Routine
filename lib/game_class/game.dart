@@ -7,7 +7,7 @@ import 'lock_system.dart';
 import 'player.dart';
 import 'room.dart';
 
-String manageInput(Player player, String text) {
+String manageInput(Player player, String text, List<Room> rooms) {
   if (text == "reculer") return player.stepBack();
   if (text == "regarder autour") return player.whereAmI();
   if (text == "regarder inventaire") return player.inventory.watch();
@@ -19,7 +19,7 @@ String manageInput(Player player, String text) {
     if (txt.contains("Vous avez déverouillé")) {
       player.stepBack();
     }
-    return player.location.last.tryToUnlockLock(cmd[1]);
+    return txt;
   }
   Map<String, GlobalObject> mapObject = player.accessibleObject();
 
@@ -29,7 +29,7 @@ String manageInput(Player player, String text) {
   if (cmd[0] == "regarder") return objectToInteract.watch();
   if (cmd[0] == "inspecter") {
     if (objectToInteract is Door || objectToInteract is Furniture || objectToInteract is Drawer) {
-      return player.check(objectToInteract) + "\n" + objectToInteract.checkLocks();
+      return player.check(objectToInteract) + "\n" + objectToInteract.watch() + ". " + objectToInteract.checkLocks();
     }
     if (objectToInteract is Padlock) {
       return player.check(objectToInteract) + "\nVous devriez essayer d'entré une combinaison.";
@@ -59,9 +59,29 @@ String manageInput(Player player, String text) {
         }
       }
     }
+    if (objectToInteract is Door) {
+      String txt = objectToInteract.open();
+      if (txt.contains("Vous ouvrez")) {
+        String newRoom = objectToInteract.otherRoom(player.location.first.name);
+        print(newRoom);
+        player.location.clear();
+        for (Room room in rooms) {
+          if (room.name == newRoom) player.location.add(room);
+        }
+        return txt + "Vous voici dans $newRoom.";
+      }
+    }
     return objectToInteract.open();
   }
-  if (cmd[0] == "prendre" && objectToInteract is Item) return player.take(objectToInteract);
-
+  if (cmd[0] == "prendre" && objectToInteract is Item) {
+    return player.take(objectToInteract);
+  }
+  if (cmd[0] == "utiliser") {
+    String txt = player.location.last.tryToUnlockLock(objectToInteract);
+    if (txt.contains("Vous avez déverouillé")) {
+      player.stepBack();
+    }
+    return txt;
+  }
   return "Je ne peux pas faire ça";
 }

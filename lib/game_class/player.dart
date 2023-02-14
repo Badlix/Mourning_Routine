@@ -1,5 +1,6 @@
 import 'package:escape_game/game_class/input.dart';
 import 'package:escape_game/game_class/lock_system.dart';
+import 'package:flutter_html/shims/dart_ui.dart';
 
 import 'global_object.dart';
 import 'door.dart';
@@ -20,6 +21,7 @@ class Player {
   String take(Item item) {
     if (item.isTakeable) {
       inventory.items.add(item);
+      location.last.removeObject(item);
       return "Vous avez récupéré " + item.name + ".";
     }
     return "Je ne peux pas faire ça.";
@@ -63,7 +65,7 @@ class Player {
 class Inventory extends GlobalObject {
   List<Item> items = [];
 
-  Inventory(String name, this.items) : super(0, name, "");
+  Inventory(String name, this.items) : super(name, "");
 
   @override
   String watch() {

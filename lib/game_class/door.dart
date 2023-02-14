@@ -4,21 +4,17 @@ import 'lock_system.dart';
 // ----------- DOOR ---------- //
 
 class Door extends GlobalObject {
-  String room1 = "";
-  String room2 = "";
+  String room1;
+  String room2;
   bool isLocked = true;
   LockSystem lockSystem;
 
-  Door(int id, String name, String description, this.room1, this.room2, this.isLocked, this.lockSystem)
-      : super(id, name, description);
+  Door(String name, String description, this.room1, this.room2, this.isLocked, this.lockSystem)
+      : super(name, description);
 
   bool get getIsLocked {
     return isLocked;
   }
-
-  // String unlock(var combi) {
-  //   return lockSystem.tryToUnlock(combi);
-  // }
 
   @override
   List<GlobalObject> getAllObject() {
@@ -29,7 +25,12 @@ class Door extends GlobalObject {
   String checkLocks() {
     String str = lockSystem.getLockedLocks();
     if (str.length < 2) return "";
-    return "Elle semble verouillée par " + str;
+    return ". Elle semble verouillée par " + str;
+  }
+
+  String otherRoom(String currentRoom) {
+    if (room1 == currentRoom) return room2;
+    return room1;
   }
 
   @override
@@ -38,7 +39,7 @@ class Door extends GlobalObject {
       return "$name est vérouillée.";
     }
     isLocked = false;
-    return "Vous ouvrer $name. Vous voici dans [une piece].";
+    return "Vous ouvrez $name.";
   }
 
   @override
