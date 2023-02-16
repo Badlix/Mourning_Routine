@@ -25,7 +25,11 @@ class Door extends GlobalObject {
   String checkLocks() {
     String str = lockSystem.getLockedLocks();
     if (str.length < 2) return "";
-    return ". Elle semble verouillée par " + str;
+    if (lockSystem.locks.length == 1 && lockSystem.locks.first is Vegetation) {
+      String lock = lockSystem.locks.first.name;
+      return ". Elle semble obstruée par $lock.";
+    }
+    return ". Elle semble verouillée par *" + str + "*.";
   }
 
   String otherRoom(String currentRoom) {
@@ -36,10 +40,10 @@ class Door extends GlobalObject {
   @override
   String open() {
     if (lockSystem.checkIfStillLocked()) {
-      return "$name est vérouillée.";
+      return "Impossible d'ouvrir *$name*." + checkLocks();
     }
     isLocked = false;
-    return "Vous ouvrez $name.";
+    return "Vous ouvrez *$name*.";
   }
 
   @override

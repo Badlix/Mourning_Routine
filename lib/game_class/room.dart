@@ -10,9 +10,8 @@ class Room extends GlobalObject {
   List<Item> items = [];
   List<Door> doors = [];
   bool firstVisit = true;
-  bool areLightsOn = true;
 
-  Room(String name, String description, this.furnitures, this.items, this.doors, this.firstVisit, this.areLightsOn)
+  Room(String name, String description, this.furnitures, this.items, this.doors, this.firstVisit)
       : super(name, description);
 
   @override

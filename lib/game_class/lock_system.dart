@@ -54,7 +54,7 @@ class Padlock extends Lock {
   String tryToUnlockLock(var combi) {
     if (combi == code) {
       isLocked = false;
-      return "Vous avez déverouillé $name.";
+      return "Vous avez déverouillé *$name*.";
     }
     return "Rien ne se passe, vous avez surement essayer la mauvaise combinaison.";
   }
@@ -69,11 +69,25 @@ class KeyHole extends Lock {
 
   @override
   String tryToUnlockLock(var combi) {
-    print(combi);
     if (combi is Key && combi.idKeyHole == idKeyHole) {
       isLocked = false;
-      return "Vous avez déverouillé $name.";
+      return "Vous avez déverouillé *$name*.";
     }
-    return "Vous essayer de déverouiller $name.La clé ne semble ne pas correspondre pas à cette porte";
+    return "Vous essayer de déverouiller *$name*. \nMalheureusement c'est un échec.";
+  }
+}
+
+// ------------ Vegetation ---------- //
+
+class Vegetation extends Lock {
+  Vegetation(String name, String description) : super(name, description);
+
+  @override
+  String tryToUnlockLock(var combi) {
+    if (combi is Lighter) {
+      isLocked = false;
+      return "Vous avez brûlée *$name*.";
+    }
+    return "Je ne peux pas faire ça.";
   }
 }

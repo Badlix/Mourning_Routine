@@ -20,21 +20,23 @@ List<String> parseInput(String cmd) {
 String parseListOfElement(List<GlobalObject> words) {
   String str = "";
   for (var i = 0; i < words.length; i++) {
+    str += "*";
     str += words[i].name;
-    if (i <= words.length - 3 && words.length >= 3) str += ", ";
-    if (i == words.length - 2) str += " et ";
+    if (i <= words.length - 3 && words.length >= 3) str += "*, ";
+    if (i == words.length - 2) str += "* et ";
   }
-  str += ".";
+  if (str.isEmpty == false) str += "*.";
   return str;
 }
 
 String parseListOfElement2(List<String> words) {
   String str = "";
   for (var i = 0; i < words.length; i++) {
+    str += "*";
     str += words[i];
-    if (i <= words.length - 3 && words.length >= 3) str += ", ";
-    if (i == words.length - 2) str += " et ";
+    if (i <= words.length - 3 && words.length >= 3) str += "*, ";
+    if (i == words.length - 2) str += "* et ";
   }
-  str += ".";
+  if (str.isEmpty == false) str += "*.";
   return str;
 }

@@ -1,11 +1,11 @@
 import 'package:escape_game/game_class/door.dart';
 import 'package:escape_game/game_class/furnitures.dart';
+import 'player.dart';
 import 'item.dart';
 
 class GlobalObject {
   String name = "";
   String description = "";
-  List<String> actions = ["regarder"];
 
   GlobalObject(this.name, this.description);
 
@@ -17,16 +17,12 @@ class GlobalObject {
     return description;
   }
 
-  List<String> get getActions {
-    return actions;
-  }
-
   String watch() {
     return description;
   }
 
   String check() {
-    return description;
+    return watch();
   }
 
   String open() {
@@ -69,5 +65,57 @@ class GlobalObject {
     return "Je ne peux pas faire ça.";
   }
 
+  String unSeal() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String addObject(Item item) {
+    return "";
+  }
+
   void removeObject(GlobalObject object) {}
+
+  String cut() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String peel() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String scale() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String nextPage() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String previousPage() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String turn() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String throwDart(Player player) {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String ls() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String cat(String nameFile) {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String switchOn() {
+    return "Je ne peux pas faire ça.";
+  }
+
+  String switchOff() {
+    return "Je ne peux pas faire ça.";
+  }
 }

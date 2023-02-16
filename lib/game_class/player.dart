@@ -1,7 +1,5 @@
 import 'package:escape_game/game_class/input.dart';
 import 'package:escape_game/game_class/lock_system.dart';
-import 'package:flutter_html/shims/dart_ui.dart';
-
 import 'global_object.dart';
 import 'door.dart';
 import 'room.dart';
@@ -11,8 +9,9 @@ import 'item.dart';
 class Player {
   List<GlobalObject> location; // contains room and furnitures
   late Inventory inventory;
+  String description;
 
-  Player(String description, this.location, this.inventory);
+  Player(this.description, this.location, this.inventory);
 
   GlobalObject getPOV() {
     return location.last;
@@ -21,18 +20,30 @@ class Player {
   String take(Item item) {
     if (item.isTakeable) {
       inventory.items.add(item);
-      location.last.removeObject(item);
-      return "Vous avez récupéré " + item.name + ".";
+      if (location.last.name != "frigo") location.last.removeObject(item);
+      return "Vous avez récupéré *" + item.name + "*.";
     }
     return "Je ne peux pas faire ça.";
+  }
+
+  String put(Item item) {
+    if (inventory.items.contains(item) == false) return "Vous ne possedez pas cet item.";
+    if (item.name == "marmite") {
+      if (location.last.name == "plaque de cuisson") {
+        inventory.removeObject(item);
+        return location.last.addObject(item);
+      }
+      return "Vous ne pouvez pas poser cet objet ici.";
+    }
+    return "Vous n'avez pas de raison de poser cet objet.";
   }
 
   String check(GlobalObject globalObject) {
     if ((globalObject is Item == false) && globalObject != location.last) {
       location.add(globalObject);
-      return "Vous inspectez " + globalObject.name + ".";
+      return "Vous inspectez *" + globalObject.name + "*.";
     }
-    return globalObject.description;
+    return "Vous inspectez *" + globalObject.name + "*.";
   }
 
   String stepBack() {
@@ -42,11 +53,11 @@ class Player {
       location.removeLast();
     }
     location.removeLast();
-    return "Vous reculer. Vous regarder maintenant " + location.last.name + ".";
+    return "Vous reculez. \nVous regardez maintenant *" + location.last.name + "*.";
   }
 
   String whereAmI() {
-    return "Vous regardez " + location.last.name + ".";
+    return "Vous regardez *" + location.last.name + "*.";
   }
 
   Map<String, GlobalObject> accessibleObject() {
@@ -69,14 +80,17 @@ class Inventory extends GlobalObject {
 
   @override
   String watch() {
-    if (items.isEmpty) return "Votre inventaire est vide.";
-    String str = "Votre inventaire contient ";
-    // for (var i = 0; i < items.length; i++) {
-    //   str += items[i].name;
-    //   if (i <= items.length - 3 && items.length >= 3) str += ", ";
-    //   if (i == items.length - 2) str += " et ";
-    // }
-    // str += ".";
-    return str + parseListOfElement(items);
+    if (items.isEmpty) return "Votre *inventaire* est vide.";
+    return "Votre *inventaire* contient " + parseListOfElement(items);
+  }
+
+  @override
+  void removeObject(GlobalObject object) {
+    for (Item item in items) {
+      if (item == object) {
+        items.remove(object);
+        return;
+      }
+    }
   }
 }
