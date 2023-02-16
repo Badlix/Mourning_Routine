@@ -36,7 +36,7 @@ class SealPaper extends Paper {
     isSealed = false;
     name = unsealName;
     description = description;
-    return "Vous avez descellée $name. Vous obtenez $name.";
+    return "J'ai ouvert $name. Il y a $name à l'intérieur.";
   }
 
   @override
@@ -47,7 +47,7 @@ class SealPaper extends Paper {
 
   @override
   String read() {
-    if (isSealed) return "$name est comme son nom l'indique scellée. Vous ne pouvez donc pas lire son contenue.";
+    if (isSealed) return "$name est  scellée. Je devrais essayer de la désceller d'abord.";
     return super.read();
   }
 }
@@ -87,7 +87,7 @@ class Watch extends Item {
       return "Il est " + DateTime.now().hour.toString() + "h$minute.";
     }
     Duration lastingTime = endGame.difference(DateTime.now());
-    return "Il vous reste " + lastingTime.inMinutes.toString() + " minutes.";
+    return "Il me reste " + lastingTime.inMinutes.toString() + " minutes.";
   }
 }
 
@@ -110,23 +110,23 @@ class Food extends Item {
 
   @override
   String cut() {
-    if (isCut) return "Vous avez déjà coupé *$name*.";
+    if (isCut) return "J'ai déjà coupé *$name*.";
     isCut = true;
-    return "Vous avez coupé *$name*.";
+    return "J'ai coupé *$name*.";
   }
 
   @override
   String peel() {
-    if (isCut) return "Vous avez déjà épluché *$name*.";
+    if (isCut) return "J'ai déjà épluché *$name*.";
     isPeel = true;
-    return "Vous avez épluché *$name*.";
+    return "J'ai épluché *$name*.";
   }
 
   @override
   String scale() {
-    if (isCut) return "Vous avez déjà écaillé *$name*.";
+    if (isCut) return "J'ai déjà écaillé *$name*.";
     isScale = true;
-    return "Vous avez écaillé *$name*.";
+    return "J'ai écaillé *$name*.";
   }
 }
 
@@ -139,7 +139,7 @@ class Marmite extends Item {
 
   String addFood(Food food) {
     recipe.addFood(food);
-    return "Vous ajoutez *" + food.name + "* à *$name*.";
+    return "J'ajoute *" + food.name + "* à *$name*.";
   }
 }
 

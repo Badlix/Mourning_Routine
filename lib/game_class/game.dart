@@ -25,7 +25,7 @@ String manageInput(Player player, String text, List<Room> rooms) {
   GlobalObject objectToInteract = mapObject[cmd[1]]!;
 
   if (text == "page suivante" || text == "lire page suivante") return objectToInteract.nextPage();
-  if (text == "page précedente" || text == "lire page précedente") return objectToInteract.previousPage();
+  if (text == "page précédente" || text == "lire page précédente") return objectToInteract.previousPage();
   if (cmd[0] == "regarder") return objectToInteract.watch();
   if (cmd[0] == "inspecter") return cmdCheck(player, objectToInteract);
   if (cmd[0] == "deverouiller") return cmdUnlock(player, objectToInteract);
@@ -52,7 +52,7 @@ String manageInput(Player player, String text, List<Room> rooms) {
 String cmdTry(Player player, String code) {
   if (player.location.last is Padlock) {
     String txt = player.location.last.tryToUnlockLock(code);
-    if (txt.contains("Vous avez déverouillé")) {
+    if (txt.contains("J'ai dévérouillé")) {
       player.stepBack();
     }
     return txt;
@@ -62,10 +62,10 @@ String cmdTry(Player player, String code) {
 
 String cmdUnlock(Player player, GlobalObject objectToInteract) {
   if (objectToInteract is Padlock) {
-    return player.check(objectToInteract) + "\nVous devriez essayer d'entré une combinaison.";
+    return player.check(objectToInteract) + "\nJe devrais essayer d'entrer une combinaison.";
   }
   if (objectToInteract is KeyHole) {
-    return player.check(objectToInteract) + "\nVous devriez utiliser une clé.";
+    return player.check(objectToInteract) + "\nJe devrais utiliser une clé.";
   }
   return "Je ne peux pas faire ça.";
 }
@@ -73,7 +73,7 @@ String cmdUnlock(Player player, GlobalObject objectToInteract) {
 String cmdOpen(Player player, GlobalObject objectToInteract, List<Room> rooms) {
   if (objectToInteract is Furniture || objectToInteract is Drawer) {
     String txt = objectToInteract.open();
-    if (txt.contains("Vous ouvrez")) {
+    if (txt.contains("J'ouvre")) {
       if (objectToInteract is Furniture) {
         player.check(objectToInteract.drawers.first);
       } else {
@@ -83,14 +83,14 @@ String cmdOpen(Player player, GlobalObject objectToInteract, List<Room> rooms) {
   }
   if (objectToInteract is Door) {
     String txt = objectToInteract.open();
-    if (txt.contains("Vous ouvrez")) {
+    if (txt.contains("J'ouvre")) {
       String newRoom = objectToInteract.otherRoom(player.location.first.name);
       print(newRoom);
       player.location.clear();
       for (Room room in rooms) {
         if (room.name == newRoom) player.location.add(room);
       }
-      return txt + "Vous voici dans *$newRoom*.";
+      return txt + "Me voilà dans *$newRoom*.";
     }
   }
   return objectToInteract.open();
@@ -105,7 +105,7 @@ String cmdTake(Player player, GlobalObject objectToInteract) {
 
 String cmdUse(Player player, GlobalObject objectToInteract) {
   String txt = player.location.last.tryToUnlockLock(objectToInteract);
-  if (txt.contains("Vous avez ")) {
+  if (txt.contains("J'ai ")) {
     player.stepBack();
   }
   return txt;
@@ -113,11 +113,11 @@ String cmdUse(Player player, GlobalObject objectToInteract) {
 
 String cmdPut(Player player, GlobalObject objectToInteract) {
   if (objectToInteract is Item) return player.put(objectToInteract);
-  return "Vous n'avez pas de raison de poser cet objet.";
+  return "Je devrais garder ça avec moi...";
 }
 
 String cmdAdd(Player player, GlobalObject objectToInteract) {
-  if (player.inventory.items.contains(objectToInteract) == false) return "Vous ne possédez pas cet objet.";
+  if (player.inventory.items.contains(objectToInteract) == false) return "Je ne possède pas cet objet.";
   if (objectToInteract is Food && player.location.last is CookingPlate) {
     for (Item item in player.location.last.getAllItems()) {
       if (item is Marmite) {
@@ -126,7 +126,7 @@ String cmdAdd(Player player, GlobalObject objectToInteract) {
       }
     }
   }
-  return "Vous ne pouvez pas faire ça.";
+  return "Je ne peux pas faire ça.";
 }
 
 String cmdUnseal(Player player, GlobalObject objectToInteract) {
@@ -169,10 +169,10 @@ String cmdCheck(Player player, GlobalObject objectToInteract) {
     return player.check(objectToInteract) + " " + objectToInteract.check() + " " + objectToInteract.checkLocks();
   }
   if (objectToInteract is Padlock) {
-    return player.check(objectToInteract) + "\nVous devriez essayer d'entré une combinaison.";
+    return player.check(objectToInteract) + "\nJe devrais essayer d'entrer une combinaison.";
   }
   if (objectToInteract is KeyHole) {
-    return player.check(objectToInteract) + "\nVous devriez utiliser une clé.";
+    return player.check(objectToInteract) + "\nJe devrais utiliser une clé.";
   }
   return player.check(objectToInteract) + " " + objectToInteract.check();
 }

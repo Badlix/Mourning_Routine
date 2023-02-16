@@ -21,29 +21,29 @@ class Player {
     if (item.isTakeable) {
       inventory.items.add(item);
       if (location.last.name != "frigo") location.last.removeObject(item);
-      return "Vous avez récupéré *" + item.name + "*.";
+      return "J'ai *" + item.name + "*.";
     }
     return "Je ne peux pas faire ça.";
   }
 
   String put(Item item) {
-    if (inventory.items.contains(item) == false) return "Vous ne possedez pas cet item.";
+    if (inventory.items.contains(item) == false) return "Je ne possède pas cet objet.";
     if (item.name == "marmite") {
       if (location.last.name == "plaque de cuisson") {
         inventory.removeObject(item);
         return location.last.addObject(item);
       }
-      return "Vous ne pouvez pas poser cet objet ici.";
+      return "je ne peux pas poser cet objet ici.";
     }
-    return "Vous n'avez pas de raison de poser cet objet.";
+    return "Je ne devrais pas mettre cet objet là.";
   }
 
   String check(GlobalObject globalObject) {
     if ((globalObject is Item == false) && globalObject != location.last) {
       location.add(globalObject);
-      return "Vous inspectez *" + globalObject.name + "*.";
+      return "J'inspecte *" + globalObject.name + "*.";
     }
-    return "Vous inspectez *" + globalObject.name + "*.";
+    return "J'inspecte *" + globalObject.name + "*.";
   }
 
   String stepBack() {
@@ -53,11 +53,11 @@ class Player {
       location.removeLast();
     }
     location.removeLast();
-    return "Vous reculez. \nVous regardez maintenant *" + location.last.name + "*.";
+    return "Je recule. \nMe voilà de retour à *" + location.last.name + "*.";
   }
 
   String whereAmI() {
-    return "Vous regardez *" + location.last.name + "*.";
+    return "Je regarde *" + location.last.name + "*.";
   }
 
   Map<String, GlobalObject> accessibleObject() {
@@ -80,8 +80,8 @@ class Inventory extends GlobalObject {
 
   @override
   String watch() {
-    if (items.isEmpty) return "Votre *inventaire* est vide.";
-    return "Votre *inventaire* contient " + parseListOfElement(items);
+    if (items.isEmpty) return "Mon *inventaire* est vide.";
+    return "Mon *inventaire* contient " + parseListOfElement(items);
   }
 
   @override

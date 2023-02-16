@@ -28,7 +28,7 @@ class Furniture extends GlobalObject {
     isLocked = false;
     String str;
     if (drawers.length == 1) return drawers.first.open();
-    return "Il y a " + drawers.length.toString() + ". Je dois choisir lequel ouvrir.";
+    return "Il y a " + drawers.length.toString() + ". Lequel dois-je ouvrir ?";
   }
 
   @override
@@ -60,7 +60,7 @@ class Furniture extends GlobalObject {
       txt += " Il contient " + parseListOfElement(drawers);
     }
     if (items.isEmpty == false) {
-      txt += " Dessus vous y voyez posé " + parseListOfElement(items);
+      txt += " Il y a posé dessus " + parseListOfElement(items);
     }
     return description + txt;
   }
@@ -92,12 +92,12 @@ class Drawer extends GlobalObject {
     isLocked = false;
     String str;
     if (items.isEmpty) {
-      str = "Vous ne trouvait rien d'interessant.";
+      str = "Il n'y a rien d'intéressant ici.";
     } else {
-      str = "Vous y trouvé ";
+      str = "Trouvé : ";
       str += parseListOfElement(items);
     }
-    return "Vous ouvrez *$name*.\n" + str;
+    return "J'ai ouvert *$name*.\n" + str;
   }
 
   @override

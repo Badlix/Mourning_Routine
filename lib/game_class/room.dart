@@ -56,6 +56,6 @@ class Room extends GlobalObject {
     for (Door door in doors) {
       obj.add(door);
     }
-    return description + "\nVous y voyez " + parseListOfElement(obj);
+    return description + "\nJe vois " + parseListOfElement(obj);
   }
 }
